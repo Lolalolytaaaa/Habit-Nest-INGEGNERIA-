@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --matcha-dark: #455826;
+  --matcha-mid: #6B7F3A;
+  --matcha-green: #92AA58;
+  --matcha-light: #B6C77B;
+  --matcha-bg: #F3F5E3;
+  --matcha-soft: #DDE3BA;
+  --color-white: #FFFFFF;
+
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+}
+
+body.dark-theme {
+  --matcha-bg: #16171d;
+  --matcha-dark: #f3f4f6;
+  --matcha-soft: #2e303a;
+  --matcha-mid: #9ca3af;
+  --color-white: #1f2028;
+  --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--matcha-bg);
+  color: var(--matcha-dark);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-smoothing: grayscale;
+  line-height: 1.5;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+h1, h2, h3 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  color: var(--matcha-dark);
+  letter-spacing: -0.02em;
+}
+
+.navigation-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--matcha-soft);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+@media (min-width: 768px) {
+  .navigation-bar {
+    position: sticky;
+    top: 65px; 
+    bottom: auto;
+    background-color: var(--matcha-bg);
+    border-top: none;
+    border-bottom: 1px solid var(--matcha-soft);
+    box-shadow: none;
+    height: 50px;
+    padding: 0 40px;
+    justify-content: flex-start;
+    gap: 30px;
+  }
+}
+
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@keyframes gold-flow { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@keyframes pulse-aura { from { box-shadow: 0 0 10px rgba(146, 170, 88, 0.2); } to { box-shadow: 0 0 30px rgba(146, 170, 88, 0.5); } }
+@keyframes energy-move { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+.icon-matcha { color: var(--matcha-mid); font-size: 1.2rem; }
+#app { min-height: 100vh; display: flex; flex-direction: column; }
+.page { padding: 40px; text-align: center; color: var(--matcha-dark); }
