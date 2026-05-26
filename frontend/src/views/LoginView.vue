@@ -87,14 +87,128 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const isLogin = ref(true)
-const availableIcons = []
+
+const availableIcons = [
+  'fa-solid fa-dove', 
+  'fa-solid fa-clover', 
+  'fa-solid fa-sun',
+  'fa-solid fa-moon', 
+  'fa-solid fa-cloud', 
+  'fa-solid fa-mountain',
+  'fa-solid fa-droplet'
+]
+
 const formData = reactive({
-  username: '', email: '', password: '', confirmPassword: '', icon: '', color: '' 
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  icon: 'fa-solid fa-dove', 
+  color: '#DDE3BA' 
 })
-const toggleMode = () => {}
-const handleSubmit = () => {}
+
+const toggleMode = () => {
+  isLogin.value = !isLogin.value
+}
+
+const handleSubmit = () => {
+  if (isLogin.value) {
+    router.push('/calendar')
+  } else {
+    if (formData.password !== formData.confirmPassword) {
+      alert("Le password non coincidono!")
+      return
+    }
+    const profileData = {
+      username: formData.username,
+      profileIcon: formData.icon,
+      profileColor: '#2d6a4f'
+    }
+    localStorage.setItem('habitNest_profile_data', JSON.stringify(profileData))
+    router.push('/calendar')
+  }
+}
 </script>
 
 <style scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  padding: 40px;
+  border-radius: 32px;
+  box-shadow: 0 15px 40px rgba(69, 88, 38, 0.1);
+  text-align: center;
+}
+
+.logo-icon {
+  width: 70px; height: 70px;
+  color: var(--matcha-dark);
+  font-size: 30px;
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.login-header h1 { font-size: 28px; color: var(--matcha-dark); margin-bottom: 10px; }
+.subtitle { color: var(--matcha-mid); font-size: 14px; margin-bottom: 20px; }
+
+.icon-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+.icon-chip {
+  background: var(--matcha-bg);
+  border: 2px solid transparent;
+  width: 45px; height: 45px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--matcha-mid);
+  transition: all 0.2s;
+}
+
+.icon-chip.active {
+  background: var(--matcha-dark);
+  color: white;
+  transform: scale(1.1);
+}
+
+.login-form { text-align: left; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--matcha-dark); margin-bottom: 8px; }
+
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-wrapper i { position: absolute; left: 15px; color: var(--matcha-mid); }
+.input-wrapper input {
+  width: 100%; padding: 12px 12px 12px 45px;
+  border: 2px solid var(--matcha-soft);
+  border-radius: 16px; outline: none; transition: 0.3s;
+}
+
+.login-btn {
+  width: 100%; padding: 16px;
+  background-color: var(--matcha-dark); color: white;
+  border: none; border-radius: 16px;
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-footer { margin-top: 25px; font-size: 14px; color: var(--matcha-mid); }
+.login-footer a { color: var(--matcha-green); font-weight: 700; text-decoration: none; }
 </style>
