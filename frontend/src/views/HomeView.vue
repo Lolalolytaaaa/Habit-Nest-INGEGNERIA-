@@ -88,7 +88,6 @@
         @zoom-out-to-month="viewLevel = 'month'"
         @update-habits="toggleHabitById"
       />
-
     </transition>
   </div>
 </template>
@@ -239,11 +238,9 @@ export default {
   min-height: 100vh;
   transition: padding 0.3s ease;
 }
-
 .dashboard-header { 
   padding: 20px 0 30px 5px; 
 }
-
 .today-badge { 
   display: inline-flex; 
   align-items: center; 
@@ -259,14 +256,12 @@ export default {
   text-transform: uppercase; 
   letter-spacing: 0.5px; 
 }
-
 .main-dashboard-grid { 
   display: grid; 
   grid-template-columns: 1fr; 
   gap: 30px; 
   width: 100%;
 }
-
 @media (min-width: 1024px) { 
   .dashboard-content { 
     padding: 0 20px 40px 20px; 
@@ -276,7 +271,6 @@ export default {
     gap: 35px; 
   } 
 }
-
 .calendar-card-expanded { 
   background: white; 
   border-radius: 24px; 
@@ -285,7 +279,6 @@ export default {
   overflow: hidden; 
   width: 100%; 
 }
-
 .sidebar-label { 
   font-size: 20px; 
   font-weight: 700; 
@@ -321,7 +314,6 @@ export default {
   cursor: pointer; 
   transition: all 0.3s ease; 
 }
-
 .toggle-library-btn.active { 
   transform: rotate(45deg); 
   background-color: var(--matcha-mid); 
@@ -347,7 +339,6 @@ export default {
   margin-bottom: 15px; 
   transition: color 0.3s ease;
 }
-
 .library-grid { 
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
