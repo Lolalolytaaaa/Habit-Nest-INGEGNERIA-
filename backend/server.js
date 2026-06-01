@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Habit = require('./models/Habit'); 
+const Habit = require('./models/Habit');
 
 const app = express();
 
@@ -13,6 +13,7 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connesso a MongoDB Atlas!'))
   .catch((err) => console.error('❌ Errore di connessione:', err));
+
 
 app.get('/api/habits', async (req, res) => {
     try {
@@ -36,11 +37,22 @@ app.post('/api/habits', async (req, res) => {
 app.put('/api/habits/:id', async (req, res) => {
     try {
         const habit = await Habit.findById(req.params.id);
+        if (!habit) return res.status(404).json({ error: "Abitudine non trovata" });
+        
         habit.completed = !habit.completed;
         await habit.save();
         res.json(habit);
     } catch (err) {
         res.status(400).json({ error: "Errore nell'aggiornamento" });
+    }
+});
+
+app.delete('/api/habits/:id', async (req, res) => {
+    try {
+        await Habit.findByIdAndDelete(req.params.id);
+        res.json({ message: "Abitudine eliminata con successo" });
+    } catch (err) {
+        res.status(400).json({ error: "Errore nell'eliminazione" });
     }
 });
 
