@@ -1,4 +1,7 @@
-require('dotenv').config();
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.join(__dirname, '.env') });
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,6 +11,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+console.log("DEBUG - Valore di MONGO_URI caricato:", process.env.MONGO_URI ? "TROVATO" : "NON TROVATO");
 
 // Connessione a MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
@@ -58,5 +63,5 @@ app.delete('/api/habits/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server in ascolto su http://localhost:${PORT}`);
+  console.log(`Server in ascolto su http://localhost:${PORT}`);
 });
