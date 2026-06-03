@@ -199,3 +199,115 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.dashboard-content { 
+  padding: 0 16px 40px 16px; 
+  background-color: var(--matcha-bg); 
+  min-height: 100vh;
+  transition: padding 0.3s ease;
+}
+
+.dashboard-header { padding: 20px 0 30px 5px; }
+
+.today-badge { 
+  display: inline-flex; align-items: center; background-color: var(--matcha-soft); 
+  padding: 10px 24px; border-radius: 50px; box-shadow: 0 2px 10px rgba(69, 88, 38, 0.05); 
+}
+.status-text { font-size: 14px; font-weight: 700; color: var(--matcha-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.main-dashboard-grid { 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: 30px; 
+  width: 100%;
+}
+
+@media (min-width: 1024px) { 
+  .dashboard-content { 
+    padding: 0 20px 40px 20px; 
+  } 
+  .main-dashboard-grid { 
+    grid-template-columns: 1fr 350px; 
+    gap: 35px; 
+  } 
+}
+
+.calendar-card-expanded { 
+  background: white; 
+  border-radius: 24px; 
+  border: 1px solid var(--matcha-soft); 
+  box-shadow: 0 10px 40px rgba(69, 88, 38, 0.08); 
+  overflow: hidden; 
+  width: 100%; 
+}
+
+.sidebar-label { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--matcha-mid); }
+.add-habit-container { position: relative; margin-bottom: 24px; }
+.add-habit-module { display: flex; gap: 10px; }
+.add-habit-module input { 
+  flex: 1; background: var(--color-white); border: 1px solid var(--matcha-soft); 
+  padding: 12px 16px; border-radius: 14px; font-family: 'Quicksand', sans-serif; outline: none; 
+}
+.toggle-library-btn { 
+  background-color: var(--matcha-dark); 
+  color: var(--matcha-bg); 
+  border: none; 
+  width: 42px; 
+  height: 42px; 
+  border-radius: 14px; 
+  font-size: 20px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+}
+
+:deep(body.dark-theme) .toggle-library-btn {
+  background-color: #94A3B8; 
+  color: white;
+}
+
+.toggle-library-btn.active { 
+  transform: rotate(45deg); 
+  background-color: var(--matcha-mid); 
+}
+
+:deep(body.dark-theme) .toggle-library-btn.active {
+  background-color: #64748B; 
+}
+
+.habit-library-dropdown { 
+  position: absolute; top: calc(100% + 10px); right: 0; left: 0; background: white; 
+  border-radius: 20px; border: 1px solid var(--matcha-soft); box-shadow: 0 15px 30px rgba(69, 88, 38, 0.15); 
+  padding: 20px; z-index: 100; 
+}
+.dropdown-label { 
+  font-size: 11px; 
+  font-weight: 700; 
+  color: var(--matcha-mid); 
+  text-transform: uppercase; 
+  letter-spacing: 1px; 
+  margin-bottom: 15px; 
+  transition: color 0.3s ease;
+}
+:deep(body.dark-theme) .dropdown-label {
+  color: #000000 !important; 
+}
+.library-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.library-item { 
+  background: var(--matcha-bg); border: none; padding: 12px; border-radius: 12px; 
+  display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; text-align: left; 
+}
+.library-item:hover { background-color: var(--matcha-soft); transform: scale(1.02); }
+.lib-emoji { font-size: 18px; }
+.lib-title { font-size: 13px; font-weight: 700; color: var(--matcha-dark); }
+
+.habits-list { display: flex; flex-direction: column; gap: 15px; position: relative; }
+
+.dropdown-fade-enter-active, .dropdown-fade-leave-active { transition: all 0.3s ease; }
+.dropdown-fade-enter-from, .dropdown-fade-leave-to { opacity: 0; transform: translateY(-10px); }
+.list-stagger-enter-active, .list-stagger-leave-active { transition: all 0.5s ease; }
+.list-stagger-enter-from { opacity: 0; transform: translateX(30px); }
+.list-stagger-leave-to { opacity: 0; transform: scale(0.5); position: absolute; }
+.ios-zoom-enter-active, .ios-zoom-leave-active { transition: all 0.4s ease; }
+</style>
