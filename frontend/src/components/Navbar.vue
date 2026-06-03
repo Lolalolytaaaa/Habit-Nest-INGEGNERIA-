@@ -5,14 +5,25 @@
     </div>
     
     <div class="navbar-right">
-      <div class="year-selector-pill">
-        <select v-model="selectedYear" @change="onYearChange" class="hidden-select">
-          <option v-for="y in [2023, 2024, 2025, 2026]" :key="y" :value="y">{{ y }}</option>
-        </select>
+      <div class="year-selector-pill" @click="isYearMenuOpen = !isYearMenuOpen" v-click-outside="closeYearMenu">
         <div class="pill-content">
           <span class="year-text">{{ selectedYear }}</span>
           <span class="pill-arrow">▼</span>
         </div>
+        
+        <transition name="menu-pop">
+          <div v-if="isYearMenuOpen" class="custom-year-dropdown">
+            <div 
+              v-for="y in [2023, 2024, 2025, 2026]" 
+              :key="y" 
+              class="year-option"
+              :class="{ 'active-year': y === selectedYear }"
+              @click.stop="selectYear(y)"
+            >
+              {{ y }}
+            </div>
+          </div>
+        </transition>
       </div>
 
       <div class="user-profile-container" v-click-outside="closeMenu">
@@ -71,14 +82,22 @@ export default {
   data() {
     return {
       selectedYear: this.year || 2024,
-      isMenuOpen: false
+      isMenuOpen: false,
+      isYearMenuOpen: false,
     }
   },
   watch: {
     year(newVal) { this.selectedYear = newVal; }
   },
   methods: {
-    onYearChange() { this.$emit('change-year', Number(this.selectedYear)); },
+    closeYearMenu() { 
+      this.isYearMenuOpen = false; 
+    },
+    selectYear(y) {
+      this.selectedYear = y;
+      this.isYearMenuOpen = false;
+      this.$emit('change-year', Number(this.selectedYear));
+    },
     closeMenu() { this.isMenuOpen = false; },
     handleLogoutAction() {
       this.isMenuOpen = false;
@@ -165,8 +184,24 @@ export default {
 .user-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; transition: var(--transition); }
 .user-avatar:hover { transform: scale(1.1); }
 
-.year-selector-pill { position: relative; background: var(--matcha-soft); border: 1.5px solid var(--matcha-dark); border-radius: 20px; padding: 4px 12px; transition: var(--transition); }
-.hidden-select { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.year-selector-pill { 
+  position: relative; background: var(--matcha-soft); 
+  border: 1.5px solid var(--matcha-dark); border-radius: 20px; 
+  padding: 4px 12px; cursor: pointer; transition: var(--transition); 
+}
+
+.custom-year-dropdown {
+  position: absolute; top: 120%; left: 50%; transform: translateX(-50%); background: white; border: 1px solid var(--matcha-soft);
+  border-radius: 16px; box-shadow: 0 10px 25px rgba(69, 88, 38, 0.15); padding: 8px; z-index: 2200; width: 90px; 
+  display: flex; flex-direction: column; gap: 4px;}
+
+.year-option {
+  padding: 8px 0; text-align: center; border-radius: 10px; font-weight: 600; 
+  color: var(--matcha-mid); cursor: pointer;transition: all 0.2s;}
+
+.year-option:hover {background: var(--matcha-bg); color: var(--matcha-dark);}
+.active-year { background: var(--matcha-dark) !important; color: white !important;}
+
 .pill-content { display: flex; align-items: center; gap: 6px; }
 .year-text { font-weight: 700; color: var(--matcha-dark); }
 .pill-arrow { font-size: 9px; color: var(--matcha-dark); }
