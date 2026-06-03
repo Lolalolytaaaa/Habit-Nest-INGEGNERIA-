@@ -5,14 +5,6 @@
     </div>
     
     <div class="navbar-right">
-      <button 
-        class="theme-toggle-btn" 
-        @click="toggleTheme" 
-        :title="isDark ? 'Attiva modalità chiara' : 'Attiva modalità scura'"
-      >
-        <i :class="isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun'"></i>
-      </button>
-
       <div class="year-selector-pill">
         <select v-model="selectedYear" @change="onYearChange" class="hidden-select">
           <option v-for="y in [2023, 2024, 2025, 2026]" :key="y" :value="y">{{ y }}</option>
@@ -79,7 +71,6 @@ export default {
   data() {
     return {
       selectedYear: this.year || 2024,
-      isDark: document.body.classList.contains('dark-theme'),
       isMenuOpen: false
     }
   },
@@ -88,10 +79,6 @@ export default {
   },
   methods: {
     onYearChange() { this.$emit('change-year', Number(this.selectedYear)); },
-    toggleTheme() {
-      this.isDark = !this.isDark;
-      document.body.classList.toggle('dark-theme');
-    },
     closeMenu() { this.isMenuOpen = false; },
     handleLogoutAction() {
       this.isMenuOpen = false;
@@ -144,11 +131,6 @@ export default {
   border: 1px solid var(--matcha-soft);
 }
 
-body.dark-theme .google-dropdown {
-  background-color: #2e303a; 
-  border-color: #3f414d;
-}
-
 .menu-header-minimal {
   display: flex; justify-content: center; align-items: center;
   position: relative; padding: 10px 0 20px;
@@ -182,15 +164,6 @@ body.dark-theme .google-dropdown {
 
 .user-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; transition: var(--transition); }
 .user-avatar:hover { transform: scale(1.1); }
-
-.theme-toggle-btn { 
-  background: var(--matcha-soft); 
-  border: 1.5px solid var(--matcha-dark); 
-  width: 36px; height: 36px; border-radius: 50%; 
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  color: var(--matcha-dark);
-  transition: var(--transition);
-}
 
 .year-selector-pill { position: relative; background: var(--matcha-soft); border: 1.5px solid var(--matcha-dark); border-radius: 20px; padding: 4px 12px; transition: var(--transition); }
 .hidden-select { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2; }
