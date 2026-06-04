@@ -28,17 +28,34 @@
             <div class="add-habit-container">
               <div class="add-habit-module">
                 <input 
+                  v-model="newHabitEmoji" 
+                  class="emoji-input" 
+                  type="text" 
+                  placeholder="✨" 
+                  maxlength="2"
+                  @keyup.enter="handleManualAdd"
+                />
+                <input 
                   v-model="newHabitTitle" 
+                  class="title-input"
                   type="text" 
                   placeholder="Nuova abitudine..." 
                   @keyup.enter="handleManualAdd"
                 />
+                <input 
+                  v-model="newHabitTime" 
+                  class="time-input"
+                  type="text" 
+                  placeholder="Orario..." 
+                  @keyup.enter="handleManualAdd"
+                />
                 <button 
                   class="toggle-library-btn" 
-                  :class="{ 'active': isLibraryOpen }"
-                  @click="isLibraryOpen = !isLibraryOpen"
+                  :class="{ 'active': isLibraryOpen && newHabitTitle.trim() === '' }"
+                  @click="handleButtonClick"
                 >
-                  +
+                  <i v-if="newHabitTitle.trim() !== ''" class="fa-solid fa-check"></i>
+                  <span v-else>+</span>
                 </button>
               </div>
               <transition name="dropdown-fade">
@@ -102,6 +119,8 @@ export default {
       selectedMonth: oggi.getMonth(),
       today: oggi,
       newHabitTitle: '',
+      newHabitEmoji: '✨',       
+      newHabitTime: '',
       isLibraryOpen: false, 
       habitLibrary: [
         { title: "Meditazione", emoji: "🧘‍♂️", time: "08:00" },
@@ -159,8 +178,17 @@ export default {
     },
     handleManualAdd() {
       if (this.newHabitTitle.trim() === '') return;
-      this.addFromLibrary({ title: this.newHabitTitle, emoji: "✨", time: "In giornata" });
+      this.addFromLibrary({ title: this.newHabitTitle, emoji: "✨", time: this.newHabitTime });
       this.newHabitTitle = '';
+      this.newHabitEmoji = '✨';
+      this.newHabitTime = '';
+    },
+    handleButtonClick() {
+      if (this.newHabitTitle.trim() !== '') {
+        this.handleManualAdd();
+      } else {
+        this.isLibraryOpen = !this.isLibraryOpen;
+      }
     },
     async addFromLibrary(template) {
       const nuovaAbitudine = {
@@ -245,9 +273,41 @@ export default {
 .sidebar-label { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--matcha-mid); }
 .add-habit-container { position: relative; margin-bottom: 24px; }
 .add-habit-module { display: flex; gap: 10px; }
+.add-habit-module { display: flex; gap: 8px; align-items: center; }
 .add-habit-module input { 
-  flex: 1; background: var(--color-white); border: 1px solid var(--matcha-soft); 
-  padding: 12px 16px; border-radius: 14px; font-family: 'Quicksand', sans-serif; outline: none; 
+  background: var(--color-white); 
+  border: 1px solid var(--matcha-soft); 
+  border-radius: 14px; 
+  font-family: 'Quicksand', sans-serif; 
+  outline: none; 
+  transition: all 0.2s;
+}
+
+.add-habit-module input:focus {
+  border-color: var(--matcha-dark);
+}
+
+.emoji-input { 
+  width: 45px; 
+  flex-shrink: 0; 
+  text-align: center; 
+  padding: 12px 0; 
+  font-size: 16px;
+}
+
+.title-input { 
+  flex: 1; 
+  padding: 12px 14px; 
+  min-width: 100px;
+}
+
+.time-input { 
+  width: 85px; 
+  flex-shrink: 0; 
+  text-align: center; 
+  padding: 12px 8px; 
+  font-size: 12px;
+  color: var(--matcha-mid);
 }
 .toggle-library-btn { 
   background-color: var(--matcha-dark); 
@@ -262,18 +322,9 @@ export default {
   transition: all 0.3s ease; 
 }
 
-:deep(body.dark-theme) .toggle-library-btn {
-  background-color: #94A3B8; 
-  color: white;
-}
-
 .toggle-library-btn.active { 
   transform: rotate(45deg); 
   background-color: var(--matcha-mid); 
-}
-
-:deep(body.dark-theme) .toggle-library-btn.active {
-  background-color: #64748B; 
 }
 
 .habit-library-dropdown { 
@@ -289,9 +340,6 @@ export default {
   letter-spacing: 1px; 
   margin-bottom: 15px; 
   transition: color 0.3s ease;
-}
-:deep(body.dark-theme) .dropdown-label {
-  color: #000000 !important; 
 }
 .library-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .library-item { 
