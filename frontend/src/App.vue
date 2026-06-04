@@ -59,6 +59,11 @@ export default {
     this.updateUserIcon();
     window.addEventListener('storage', this.updateUserIcon);
   },
+  watch: {
+    $route() {
+      this.updateUserIcon();
+    }
+  },
   methods: {
     updateYear(newYear) {
       this.globalYear = newYear;
@@ -112,7 +117,6 @@ export default {
   z-index: 1;
 }
 
-/* Barra menu per mobile */
 .navigation-bar {
   position: fixed;
   bottom: 0;

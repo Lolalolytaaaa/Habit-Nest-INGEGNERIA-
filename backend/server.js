@@ -14,7 +14,6 @@ app.use(express.json());
 
 console.log("DEBUG - Valore di MONGO_URI caricato:", process.env.MONGO_URI ? "TROVATO" : "NON TROVATO");
 
-// Connessione a MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connesso a MongoDB Atlas!'))
   .catch((err) => console.error('❌ Errore di connessione:', err));

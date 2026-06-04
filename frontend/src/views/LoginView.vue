@@ -2,8 +2,11 @@
   <div class="login-container">
     <div class="login-card">
       <div class="login-header">
-        <div class="logo-icon" :style="{ backgroundColor: isLogin ? 'var(--matcha-bg)' : formData.color }">
-          <i :class="isLogin ? 'fa-solid fa-nest-feather' : formData.icon"></i>
+        <div class="logo-icon" :style="{ 
+          backgroundColor: isLogin ? 'var(--matcha-bg)' : formData.color,
+          color: isLogin ? 'var(--matcha-dark)' : 'white' 
+        }">
+          <i :class="isLogin ? 'fa-solid fa-dove' : formData.icon"></i>
         </div>
         
         <h1>{{ isLogin ? 'Bentornato nel Nido' : 'Crea il tuo Nido' }}</h1>
@@ -25,10 +28,19 @@
               v-for="icon in availableIcons" 
               :key="icon"
               :class="['icon-chip', { active: formData.icon === icon }]"
+              :style="formData.icon === icon ? { backgroundColor: formData.color, color: 'white', borderColor: formData.color } : {}"
               @click="formData.icon = icon"
             >
               <i :class="icon"></i>
             </button>
+          </div>
+        </div> 
+
+        <div v-if="!isLogin" class="form-group">
+          <label>Scegli il tuo colore:</label>
+          <div class="color-picker-container">
+            <input type="color" v-model="formData.color" class="custom-color-input" />
+            <span class="color-code">{{ formData.color.toUpperCase() }}</span>
           </div>
         </div>
 
@@ -124,9 +136,10 @@ const handleSubmit = () => {
     const profileData = {
       username: formData.username,
       profileIcon: formData.icon,
-      profileColor: '#2d6a4f'
+      profileColor: 'formData.color'
     }
     localStorage.setItem('habitNest_profile_data', JSON.stringify(profileData))
+    window.dispatchEvent(new Event('storage'))
     router.push('/calendar')
   }
 }
@@ -187,6 +200,45 @@ const handleSubmit = () => {
   background: var(--matcha-dark);
   color: white;
   transform: scale(1.1);
+}
+
+.color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.custom-color-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 45px;
+  height: 45px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.custom-color-input::-webkit-color-swatch {
+  border-radius: 12px;
+  border: 2px solid var(--matcha-soft);
+}
+
+.custom-color-input::-moz-color-swatch {
+  border-radius: 12px;
+  border: 2px solid var(--matcha-soft);
+}
+
+.color-code {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--matcha-mid);
+  font-size: 15px;
+  background: var(--matcha-bg);
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
 .login-form { text-align: left; }
