@@ -79,19 +79,42 @@ const getBadge = (streak) => {
   return badgeTiers.find(tier => streak >= tier.min)
 }
 
-const users = ref([
-  { name: 'Elena', streak: 380, icon: 'fa-solid fa-sun', color: '#f59e0b' },
-  { name: 'Marco', streak: 310, icon: 'fa-solid fa-mountain', color: '#EAB308' },
-  { name: 'Sofia', streak: 215, icon: 'fa-solid fa-moon', color: '#4338ca' },
-  { name: 'Davide', streak: 120, icon: 'fa-solid fa-cloud', color: '#ec4899' },
-  { name: 'Lola',  streak: 65,  icon: 'fa-solid fa-dove', color: '#2d6a4f' },
-  { name: 'Giulia', streak: 35,  icon: 'fa-solid fa-clover', color: '#92AA58' },
-  { name: 'Luca',  streak: 18,  icon: 'fa-solid fa-droplet', color: '#10b981' },
-  { name: 'Pietro', streak: 0,   icon: 'fa-solid fa-cloud', color: '#64748b' }
-])
+const allLeaderboards = ref({
+  'Globale': [
+    { name: 'Elena', streak: 380, icon: 'fa-solid fa-sun', color: '#f59e0b' },
+    { name: 'Marco', streak: 310, icon: 'fa-solid fa-mountain', color: '#EAB308' },
+    { name: 'Sofia', streak: 215, icon: 'fa-solid fa-moon', color: '#4338ca' },
+    { name: 'Davide', streak: 120, icon: 'fa-solid fa-cloud', color: '#ec4899' },
+    { name: 'Lola',  streak: 65,  icon: 'fa-solid fa-dove', color: '#2d6a4f' },
+    { name: 'Giulia', streak: 35,  icon: 'fa-solid fa-clover', color: '#92AA58' },
+    { name: 'Luca',  streak: 18,  icon: 'fa-solid fa-droplet', color: '#10b981' },
+    { name: 'Pietro', streak: 0,   icon: 'fa-solid fa-cloud', color: '#64748b' }
+  ],
+  'Mensile': [
+    { name: 'Sofia', streak: 28, icon: 'fa-solid fa-moon', color: '#4338ca' },
+    { name: 'Elena', streak: 25, icon: 'fa-solid fa-sun', color: '#f59e0b' },
+    { name: 'Giulia', streak: 19, icon: 'fa-solid fa-clover', color: '#92AA58' },
+    { name: 'Lola',  streak: 15,  icon: 'fa-solid fa-dove', color: '#2d6a4f' },
+    { name: 'Marco', streak: 12, icon: 'fa-solid fa-mountain', color: '#EAB308' },
+    { name: 'Luca',  streak: 5,  icon: 'fa-solid fa-droplet', color: '#10b981' },
+    { name: 'Davide', streak: 3, icon: 'fa-solid fa-cloud', color: '#ec4899' },
+    { name: 'Pietro', streak: 0, icon: 'fa-solid fa-cloud', color: '#64748b' }
+  ],
+  'Settimanale': [
+    { name: 'Lola',  streak: 7,  icon: 'fa-solid fa-dove', color: '#2d6a4f' },
+    { name: 'Marco', streak: 5,  icon: 'fa-solid fa-mountain', color: '#EAB308' },
+    { name: 'Elena', streak: 4,  icon: 'fa-solid fa-sun', color: '#f59e0b' },
+    { name: 'Luca',  streak: 3,  icon: 'fa-solid fa-droplet', color: '#10b981' },
+    { name: 'Sofia', streak: 2,  icon: 'fa-solid fa-moon', color: '#4338ca' },
+    { name: 'Giulia', streak: 2, icon: 'fa-solid fa-clover', color: '#92AA58' },
+    { name: 'Davide', streak: 1, icon: 'fa-solid fa-cloud', color: '#ec4899' },
+    { name: 'Pietro', streak: 0, icon: 'fa-solid fa-cloud', color: '#64748b' }
+  ]
+})
 
 const filteredUsers = computed(() => {
-  return [...users.value].sort((a, b) => b.streak - a.streak)
+  const currentList = allLeaderboards.value[selectedFilter.value] || []
+  return [...currentList].sort((a, b) => b.streak - a.streak)
 })
 
 onMounted(() => {
@@ -101,12 +124,14 @@ onMounted(() => {
       const data = JSON.parse(savedProfile)
       username.value = data.username || 'Lola'
       
-      const userIndex = users.value.findIndex(u => u.name === 'Lola' || u.name === data.username)
-      if (userIndex !== -1) {
-        users.value[userIndex].name = data.username || 'Lola'
-        users.value[userIndex].icon = data.profileIcon || 'fa-solid fa-dove'
-        users.value[userIndex].color = data.profileColor || '#2d6a4f'
-      }
+      Object.values(allLeaderboards.value).forEach(list => {
+        const userIndex = list.findIndex(u => u.name === 'Lola' || u.name === data.username)
+        if (userIndex !== -1) {
+          list[userIndex].name = data.username || 'Lola'
+          list[userIndex].icon = data.profileIcon || 'fa-solid fa-dove'
+          list[userIndex].color = data.profileColor || '#2d6a4f'
+        }
+      })
     } catch (e) {
       console.error("Errore lettura dati profilo in classifica", e)
     }
