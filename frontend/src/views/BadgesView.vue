@@ -66,10 +66,10 @@ const username = ref('Lola')
 const selectedFilter = ref('Globale')
 
 const badgeTiers = [
-  { min: 365, name: 'Guardiano del Nido', icon: 'fa-solid fa-shield-halved', color: 'linear-gradient(135deg, #fef08a, #b45309)' },
-  { min: 300, name: 'Primo Volo', icon: 'fa-solid fa-feather-pointed', color: 'linear-gradient(135deg, #7dd3fc, #0284c7)' },
-  { min: 200, name: 'Nuovo Nido', icon: 'fa-solid fa-egg', color: 'linear-gradient(135deg, #fb923c, #c2410c)' },
-  { min: 100, name: 'Dolce Frutto', icon: 'fa-solid fa-apple-whole', color: 'linear-gradient(135deg, #fcd34d, #d97706)' },
+  { min: 365, name: 'Guardiano del Nido', icon: 'fa-solid fa-shield-halved', color: 'linear-gradient(135deg, #166534, #022c22)' },
+  { min: 300, name: 'Primo Volo', icon: 'fa-solid fa-feather-pointed', color: 'linear-gradient(135deg, #15803d, #064e3b)' },
+  { min: 200, name: 'Nuovo Nido', icon: 'fa-solid fa-egg', color: 'linear-gradient(135deg, #16a34a, #14532d)' },
+  { min: 100, name: 'Dolce Frutto', icon: 'fa-solid fa-apple-whole', color: 'linear-gradient(135deg, #22c55e, #166534)' },
   { min: 60, name: 'Radici Forti', icon: 'fa-solid fa-tree', color: 'linear-gradient(135deg, #4ade80, #15803d)' },
   { min: 30, name: 'Primo Germoglio', icon: 'fa-solid fa-leaf', color: 'linear-gradient(135deg, #bbf7d0, #22c55e)' },
   { min: 0,  name: 'Piccolo Seme', icon: 'fa-solid fa-seedling', color: 'linear-gradient(135deg, #d9f99d, #84cc16)' }

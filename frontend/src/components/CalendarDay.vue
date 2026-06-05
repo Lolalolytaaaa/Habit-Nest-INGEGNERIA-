@@ -1,16 +1,5 @@
 <template>
-  <div class="matcha-day-view">
-    <transition name="pop">
-      <div v-if="showSuccessModal" class="success-overlay" @click.self="showSuccessModal = false">
-        <div class="success-card">
-          <div class="success-icon">🌿</div>
-          <h2 class="success-title">Ottimo lavoro!</h2>
-          <p class="success-message">Hai completato tutte le tue abitudini per oggi. Continua così per mantenere alta la tua costanza!</p>
-          <button class="close-modal-btn" @click="showSuccessModal = false">Fantastico!</button>
-        </div>
-      </div>
-    </transition>
-
+  <div>
     <header class="day-header">
       <button class="back-btn" @click="$emit('zoom-out-to-month')">
         <span class="arrow">←</span> {{ monthNames[selectedDay.month] }}
@@ -100,76 +89,6 @@ export default {
   display: flex;
   flex-direction: column;
   font-family: 'Quicksand', sans-serif;
-}
-
-.success-overlay {
-  position: fixed;
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%;
-  background-color: rgba(69, 88, 38, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  backdrop-filter: blur(4px);
-}
-
-.success-card {
-  background: white;
-  padding: 40px;
-  border-radius: 32px;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  border: 1px solid var(--matcha-soft);
-}
-
-.success-icon { 
-  font-size: 64px; 
-  margin-bottom: 20px; 
-}
-.success-title { 
-  color: var(--matcha-dark); 
-  margin-bottom: 10px; 
-  font-size: 28px; 
-  font-weight: 700; 
-}
-.success-message { 
-  color: var(--matcha-mid); 
-  margin-bottom: 30px; 
-  line-height: 1.5; 
-  font-weight: 500; 
-}
-
-.close-modal-btn {
-  background-color: var(--matcha-dark);
-  color: white;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 16px;
-  font-weight: 700;
-  font-family: 'Quicksand', sans-serif;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.close-modal-btn:hover { 
-  transform: scale(1.05); 
-}
-
-.pop-enter-active { 
-  animation: pop-in 0.3s ease-out; 
-}
-.pop-leave-active { 
-  animation: pop-in 0.2s reverse ease-in; 
-}
-
-@keyframes pop-in {
-  0% { transform: scale(0.7); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
 }
 
 .day-header { 

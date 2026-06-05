@@ -184,8 +184,4 @@ export default {
     background-color: var(--matcha-soft);
   }
 }
-
-body.dark-theme .navigation-bar {
-  background-color: var(--matcha-bg);
-}
 </style>
